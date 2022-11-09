@@ -1,4 +1,4 @@
-package odrl.lib;
+package odrl.lib.siotrx;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -38,7 +38,7 @@ public class SIoTService {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static final String solveSIoTPolicy(String policy, Map<String, Object> params)
 			throws IncompatibleMappingException, TranslationUnitExecutionException, IncorrectMappingException,
 			ExtensionNotFoundException {
@@ -47,7 +47,7 @@ public class SIoTService {
 				.map(uniT -> runUnit(uniT, params)).collect(Collectors.joining());
 
 	}
-	
+
 	public static void close() {
 		service.shutdown();
 	}
@@ -74,7 +74,7 @@ public class SIoTService {
 					System.exit(-1);
 				}
 			});
-		
+
 	}
 
 	private static JsonArray readDefaultComponents() {

@@ -1,0 +1,19 @@
+{
+  "@context": "http://www.w3.org/ns/odrl.jsonld",
+  "@type": "Set",
+  "uid": "http://example.com/policy:1010",
+  "permission": [
+    {
+      "target": "http://example.com/asset:9898.movie",
+      "action": "display",
+      "constraint": [
+        {
+          "leftOperand": "http://www.w3.org/ns/odrl/2/spatial",
+          "operator": "eq",
+          "rightOperand": "https://www.wikidata.org/wiki/Q183",
+          "comment": "i.e Germany"
+        }
+      ]
+    }
+  ]
+}
