@@ -35,6 +35,7 @@ public class TestTime {
 	public void test01() throws Exception  {
 		String policy = Tests.readPolicy(dir.append("time-ex1.json").toString());
 		Map<String, List<String>> result = Tests.solvePolicy(policy);
+		System.out.println(result);
 		Assert.assertTrue(result.containsKey("http://example.com/asset:9898.movie"));
 	}
 
