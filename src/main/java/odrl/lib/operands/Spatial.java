@@ -16,7 +16,6 @@ import com.google.gson.JsonObject;
 public class Spatial extends FunctionBase0 implements Operand {
 	private static File dir = new File("./operands");
 	private static File file = new File("./operands/spatial.json");
-	private String spatial = null;
 	private final static Gson GSON = new Gson();
 
 	public Spatial() {

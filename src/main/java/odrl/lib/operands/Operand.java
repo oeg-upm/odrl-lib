@@ -1,9 +1,7 @@
 package odrl.lib.operands;
 
-import org.apache.jena.sparql.function.Function;
+import odrl.lib.RegistrableElement;
 
-public interface Operand extends Function {
-
-	String getName();
+public interface Operand extends RegistrableElement {
 
 }

@@ -1,4 +1,5 @@
 <#assign weatherConf = "{\"url\" : \"https://api.open-meteo.com/v1/forecast?latitude=40.4050099&longitude=-3.839519&hourly=temperature_2m\"}">
+
 <#assign weather=providers("URLProvider", weatherConf)?eval>
 <#assign currentTime = .now?time?keep_before(":")>
 <#assign tmp="ERROR">
@@ -16,7 +17,7 @@
 	"constraint": [{
            "leftOperand":  "[=tmp]",
            "operator": "gt",
-           "rightOperand":  { "@value": "35", "@type": "xsd:dateTime" }
+           "rightOperand":  { "@value": "35", "@type": "xsd:double" }
        } ]
  }]
 }

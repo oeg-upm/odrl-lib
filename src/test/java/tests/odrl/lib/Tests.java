@@ -17,15 +17,22 @@ import odrl.lib.exceptions.PolicyException;
 import odrl.lib.exceptions.UnsupportedOperandException;
 import odrl.lib.exceptions.UnsupportedOperatorException;
 import odrl.lib.operands.Time;
+import odrl.lib.operators.GeoSparqlContains;
 
 public class Tests {
 
 
+	
+	public static OdrlLib odrl = new OdrlLib();
+	
+	
+	
 	public static Map<String, List<String>> solvePolicy(String policy) throws UnsupportedOperandException, UnsupportedOperatorException, PolicyException, OdrlRegistrationException {
 		JsonObject policyJson = Policies.fromJsonld11String(policy);
-		OdrlLib odrl = new OdrlLib();
+		
 		odrl.registerPrefix("ops", "http://upm.es/operands#");
 		odrl.register("ops", new Time());
+		
 		return odrl.solve(policyJson);
 	}
 

@@ -1,5 +1,7 @@
 package odrl.lib.operators;
 
-public interface Operator {
-	String getName();
+import odrl.lib.RegistrableElement;
+
+public interface Operator  extends RegistrableElement{
+
 }

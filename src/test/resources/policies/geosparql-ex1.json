@@ -1,0 +1,16 @@
+{
+ "@context": ["http://www.w3.org/ns/odrl.jsonld",
+   {"geof" : "http://www.opengis.net/def/function/geosparql/"}
+ ],
+ "@type": "Set",
+ "uid": "http://example.com/policy:1010",
+ "permission": [{
+ 	"target": "http://example.com/asset:9898.movie",
+	"action": "read",
+	"constraint":{
+           "leftOperand": { "@value": "POINT((-3.797794 40.411132))", "@type": "http://www.opengis.net/ont/geosparql#wktLiteral" },
+           "operator": "geof:sfContains" ,
+           "rightOperand":  { "@value": "POLYGON((-3.840070031583308 40.405675773960866,-3.839853107929229 40.40574011056009,-3.839842379093169 40.40571994155346,-3.839847072958945 40.40571840972993,-3.839840702712535 40.405706155140365,-3.840056620538234 40.40564947763477,-3.840070031583308 40.405675773960866))", "@type": "http://www.opengis.net/ont/geosparql#wktLiteral" }
+	   }
+ }]
+}

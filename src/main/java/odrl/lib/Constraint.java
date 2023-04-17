@@ -1,6 +1,7 @@
 package odrl.lib;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
@@ -19,8 +20,10 @@ import odrl.lib.exceptions.UnsupportedOperatorException;
 
 class Constraint {
 
-	private static final Logger LOG = LoggerFactory.getLogger(OdrlLib.class);
+	private static final Logger LOG = LoggerFactory.getLogger(Constraint.class);
 
+	
+	
 	private RDFNode leftNode;
 	private RDFNode operatorNode;
 	private RDFNode rightNode;
@@ -30,6 +33,7 @@ class Constraint {
 
 	public Constraint(RDFNode leftNode, RDFNode operatorNode, RDFNode rightNode, Map<String, String> functions, Map<String, String> prefixes) {
 		super();
+	
 		this.leftNode = leftNode;
 		this.operatorNode = operatorNode;
 		this.rightNode = rightNode;
@@ -65,14 +69,17 @@ class Constraint {
 
 	public boolean solve() {
 		String bind = toSPARQL();
+		
 		StringBuilder SPARQL = new StringBuilder();
 		prefixes.entrySet().forEach(entry -> SPARQL.append("PREFIX ").append(entry.getKey()).append(": <").append(entry.getValue()).append("> \n"));
 		SPARQL.append("SELECT ?bind1 WHERE { \n").append(bind).append("}\n");
-
+		
 		return evaluateQuery(SPARQL.toString());
 	}
 
 	private boolean evaluateQuery(String query) {
+		if(OdrlLib.debug)
+			LOG.info("Constraint SPARQL: "+query);
 		Model model = ModelFactory.createDefaultModel();
 		ResultSet rs = QueryExecutionFactory.create(QueryFactory.create(query), model).execSelect();
 		int solutions = 0;
@@ -83,8 +90,8 @@ class Constraint {
 			allowed = rs.next().get("bind1").asLiteral().getBoolean();
 			solutions++;
 		}
-		System.out.println("Constraint SPARQL: "+query);
-		System.out.println("Constraint SPARQL resolved as: "+allowed);
+		if(OdrlLib.debug)
+			LOG.info("Constraint SPARQL resolved as: "+allowed);
 		// TODO; if solutions is 0 exception
 		return allowed;
 	}
@@ -95,7 +102,7 @@ class Constraint {
 			String right = solveOperant(this.rightNode);
 			String operator = solveOperator(this.operatorNode);
 			if(functions.containsKey(operator)){
-				return concat(" BIND ( "+operator+"("+left+","+right+") AS ?bind1 ) \n");
+				return concat(" BIND ( "+shorcutOperator(operator)+"("+left+","+right+") AS ?bind1 ) \n");
 			}else {
 				return concat(" BIND ( "+left+" "+operator+" "+right+" AS ?bind1 ) \n");
 			}
@@ -105,6 +112,22 @@ class Constraint {
 		return null;
 	}
 
+	/**
+	 * This method replaces the operator URI for its associated prefix
+	 * @param operator
+	 * @return
+	 */
+	private String shorcutOperator(String operator) {
+		String result = operator;
+		Optional<String> value = prefixes.entrySet().parallelStream()
+				.filter(entry -> operator.startsWith(entry.getValue()))
+				.map(entry -> operator.replace(entry.getValue(), entry.getKey()+":"))
+				.findFirst();
+			if(value.isPresent())
+				result = value.get();
+		return result;
+	}
+	
 	/**
 	 * This method replaces any ODRL operator (eq, gt, gteq, hasPart, isA, isAllOf,
 	 * isAnyOf, isNoneOf, isPartOf, lt, lteq, neq) for a SPARQL native operator
@@ -130,8 +153,10 @@ class Constraint {
 				return " <= ";
 			if (operator.equals("http://www.w3.org/ns/odrl/2/neq"))
 				return " != ";
-			if(functions.containsKey(operator))
+			if(functions.containsKey(operator)) {
 				return operator;
+			}
+				
 
 		}
 		// hasPart, isA, isAllOf, isAnyOf, isNoneOf, isPartOf,

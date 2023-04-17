@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.compress.utils.Lists;
-import org.apache.jena.atlas.logging.Log;
 import org.apache.jena.ext.com.google.common.collect.Maps;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
@@ -16,9 +15,6 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.sparql.function.FunctionRegistry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.JsonObject;
 
 import odrl.lib.exceptions.OdrlRegistrationException;
@@ -26,12 +22,11 @@ import odrl.lib.exceptions.PolicyException;
 import odrl.lib.exceptions.UnsupportedOperandException;
 import odrl.lib.exceptions.UnsupportedOperatorException;
 import odrl.lib.operands.DateTime;
-import odrl.lib.operands.Operand;
 import odrl.lib.operands.Spatial;
 
 public class OdrlLib {
 
-	private static final Logger LOG = LoggerFactory.getLogger(OdrlLib.class);
+	//private static final Logger LOG = LoggerFactory.getLogger(OdrlLib.class);
 	private static final String PERMISSIONS = "PREFIX odrl: <http://www.w3.org/ns/odrl/2/>\n"
 			+ "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n"
 			+ "SELECT ?action ?target ?left ?right ?op WHERE { \n"
@@ -45,11 +40,14 @@ public class OdrlLib {
 			+ "} \n"
 			+ "\n"
 			+ "";
-
+	
+	protected static boolean debug = false;
+	
 
 	private Map<String, String> prefixes = Maps.newHashMap();
 	private Map<String, String> functions = Maps.newHashMap();
 	public OdrlLib() {
+		
 		registerPrefix("odrl", "http://www.w3.org/ns/odrl/2/");
 		try {
 			register("odrl", new DateTime());
@@ -71,13 +69,21 @@ public class OdrlLib {
 		return functions;
 	}
 
-	public void register(String prefix, Operand operand) throws OdrlRegistrationException {
+	public void register(String prefix, RegistrableElement operand) throws OdrlRegistrationException {
 		if(!prefixes.containsKey(prefix))
 			throw new OdrlRegistrationException("Provided prefix ("+prefix+") does not exist, register first a URI with that prefix using addPrefix method.");
 		String uri = prefixes.get(prefix);
 		FunctionRegistry.get().put(uri + operand.getName(), operand.getClass());
 		functions.put(uri + operand.getName(), prefix+":"+operand.getName());
 	}
+	
+	public void register(String prefix, String nativeSparql) throws OdrlRegistrationException {
+		if(!prefixes.containsKey(prefix))
+			throw new OdrlRegistrationException("Provided prefix ("+prefix+") does not exist, register first a URI with that prefix using addPrefix method.");
+		String uri = prefixes.get(prefix);
+		functions.put(uri + nativeSparql, prefix+":"+nativeSparql);
+	}
+
 
 
 	public Map<String,List<String>> solve(JsonObject policyJson) throws UnsupportedOperandException, UnsupportedOperatorException, PolicyException {
@@ -127,6 +133,14 @@ public class OdrlLib {
 		action.addConstraint(constraint);
 		permission.addAction(action);
 		return permission;
+	}
+
+	public static boolean isDebug() {
+		return debug;
+	}
+
+	public static void setDebug(boolean debug) {
+		OdrlLib.debug = debug;
 	}
 
 

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>es.upm.fi.oeg</groupId>
   <artifactId>odrl-lib</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <name>ODRL Lib</name>
   <description>Library for solving ODRL policies compliant with the standard</description>
   <url>https://github.com/oeg-upm/odrl-lib</url>
@@ -28,6 +28,13 @@
 			<artifactId>sparql-streamline</artifactId>
 			<version>0.1.5</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.jena/jena-geosparql -->
+		<dependency>
+		    <groupId>org.apache.jena</groupId>
+		    <artifactId>jena-geosparql</artifactId>
+		    <version>4.7.0</version>
+		</dependency>
+				
 		<dependency>
 			<groupId>io.github.helio-ecosystem</groupId>
 			<artifactId>helio-builder-siot</artifactId>
