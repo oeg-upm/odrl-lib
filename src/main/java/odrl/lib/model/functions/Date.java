@@ -5,6 +5,7 @@ import org.apache.jena.sparql.function.FunctionBase0;
 
 public class Date extends FunctionBase0 implements IFunction {
 
+
 	@Override
 	public String getName() {
 		return "date";

@@ -91,7 +91,7 @@ public class ParsingOperatorsTests {
 		}
 		Assert.assertTrue(exception);
 	}
-	
+
 	@Test
 	public void test08() throws Exception {
 		String expected = " BIND ( odrl:eq(odrl:dateTime(\"33\"^^<http://www.w3.org/2001/XMLSchema#integer>),\"2022-11-04T06:00:13.625668Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>) AS ?bind1 )";
@@ -106,7 +106,7 @@ public class ParsingOperatorsTests {
 		}
 		Assert.assertTrue(exception);
 	}
-	
+
 	@Test
 	public void test09() throws Exception {
 		String expected = "BIND ( odrl:eq(odrl:dateTime(units:meter),\"2022-11-04T06:00:13.625668Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>) AS ?bind1 )";
@@ -121,8 +121,8 @@ public class ParsingOperatorsTests {
 		}
 		Assert.assertTrue(exception);
 	}
-	
-	
+
+
 	// Parsing spatialF with wrong parameters
 	@Test
 	public void test10() throws Exception {
@@ -138,16 +138,16 @@ public class ParsingOperatorsTests {
 		}
 		Assert.assertTrue(exception);
 	}
-	
-	
-	
+
+
+
 		@Test
 		public void test11() throws Exception {
 			boolean exception = false;
 			try {
 				List<Constraint> constraints = fetchConstraints(dir.append("parsing-ex6.json").toString(), 1, 1, 1);
 				Constraint constraint = constraints.get(0);
-				
+
 				constraint.solve(Tests.odrl.getPrefixes());
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -161,7 +161,7 @@ public class ParsingOperatorsTests {
 			try {
 				List<Constraint> constraints = fetchConstraints(dir.append("parsing-ex7.json").toString(), 1, 1, 1);
 				Constraint constraint = constraints.get(0);
-				
+
 				constraint.solve(Tests.odrl.getPrefixes());
 			}catch(Exception e) {
 				e.printStackTrace();

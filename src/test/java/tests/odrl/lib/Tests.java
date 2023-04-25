@@ -28,12 +28,14 @@ public class Tests {
 
 	public static OdrlLib odrl = new OdrlLib();
 
+	
+	
 	public static Map<String, List<String>> solvePolicy(String policy) throws UnsupportedFunctionException, OdrlRegistrationException, OperandException, OperatorException, EvaluationException {
 		JsonObject policyJson = Policies.fromJsonld11String(policy);
 
 		odrl.registerPrefix("ops", "http://upm.es/operands#");
 		odrl.register("ops", new Time());
-
+		odrl.registerNative();
 		return odrl.solve(policyJson);
 	}
 

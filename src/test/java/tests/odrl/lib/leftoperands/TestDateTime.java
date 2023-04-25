@@ -1,7 +1,6 @@
 package tests.odrl.lib.leftoperands;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +9,7 @@ import org.junit.Test;
 
 import odrl.lib.model.exceptions.UnsupportedFunctionException;
 import tests.odrl.lib.Tests;
+import java.util.Date;
 
 public class TestDateTime {
 

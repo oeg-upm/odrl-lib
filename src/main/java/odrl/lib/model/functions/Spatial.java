@@ -39,6 +39,7 @@ public class Spatial extends FunctionBase0 implements IFunction {
 
 	}
 
+
 	@Override
 	public String getName() {
 		return "spatial";

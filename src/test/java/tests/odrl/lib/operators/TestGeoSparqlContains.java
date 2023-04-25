@@ -46,7 +46,7 @@ public class TestGeoSparqlContains {
 	@Test
 	public void test03() throws Exception  {
 		String policy = Tests.readPolicy(dir.append("geosparql-ex3.json").toString());
-		
+
 		boolean exception = false;
 		try {
 			Tests.solvePolicy(policy);
@@ -56,7 +56,7 @@ public class TestGeoSparqlContains {
 		Assert.assertTrue(exception);
 	}
 
-	
+
 	@Test
 	public void test04() throws Exception  {
 		String policy = Tests.readPolicy(dir.append("geosparql-ex4.json").toString());
@@ -69,7 +69,7 @@ public class TestGeoSparqlContains {
 		}
 		Assert.assertTrue(exception);
 	}
-	
+
 	@Test
 	public void test05() throws Exception  {
 		String policy = Tests.readPolicy(dir.append("geosparql-ex5.json").toString());

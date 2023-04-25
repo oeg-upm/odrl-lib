@@ -3,11 +3,9 @@ package odrl.lib.model;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.apache.commons.compress.utils.Lists;
 
-import com.github.jsonldjava.shaded.com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 

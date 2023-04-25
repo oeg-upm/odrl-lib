@@ -1,11 +1,10 @@
 package odrl.lib.model.functions;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.apache.jena.sparql.expr.NodeValue;
 import org.apache.jena.sparql.function.FunctionBase0;
-
+import java.util.Date;  
 /**
  * This class implements the dateTime LeftOperand from the ODRL specification. It allows to compare xsd:dateTime values, however it does not work with only time or date for which the {@link Time} and {@link Date} operands are recommended. {@link Time} and {@link Date} operands do nto belong to the ODRL standard.
  * @see <a href="https://www.w3.org/TR/odrl-vocab/#term-dateTime">ODRL LeftOperand dateTime</a>
@@ -32,6 +31,7 @@ public class DateTime extends FunctionBase0 implements IFunction {
 		buff.append('T').append(format2.format(date));
 		return buff.append('Z').toString();
 	}
+
 
 	@Override
 	public String getName() {

@@ -6,7 +6,7 @@ public class OperandValue implements IOperand{
 	private String type;
 	private String lang;
 	private boolean isUri = false;
-	
+
 	public String getLang() {
 		return lang;
 	}
@@ -20,7 +20,7 @@ public class OperandValue implements IOperand{
 		this.value = value;
 	}
 
-	
+
 	public String getValue() {
 		return value;
 	}
@@ -33,9 +33,9 @@ public class OperandValue implements IOperand{
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
-	
+
+
+
 
 	public boolean isUri() {
 		return isUri;
@@ -49,6 +49,7 @@ public class OperandValue implements IOperand{
 	private static final char TOKEN_AT = '@';
 	private static final String TOKEN_DATATYPE_1 = "^^<";
 	private static final String TOKEN_DATATYPE_2 = ">";
+
 	@Override
 	public String toSPARQL() {
 		StringBuilder sparqlRepresentation = new StringBuilder(value);

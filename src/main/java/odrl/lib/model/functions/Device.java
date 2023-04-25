@@ -40,6 +40,7 @@ public class Device extends FunctionBase0 implements IFunction {
 
 	}
 
+
 	@Override
 	public String getName() {
 		return "device";

@@ -1,13 +1,13 @@
 package tests.odrl.lib.leftoperands;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import odrl.lib.model.functions.Date;
 import tests.odrl.lib.Tests;
 
 public class TestTime {

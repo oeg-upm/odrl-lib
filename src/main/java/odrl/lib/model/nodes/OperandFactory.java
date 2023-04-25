@@ -12,9 +12,9 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.resultset.ResultsFormat;
 
+import odrl.lib.model.Sparql;
 import odrl.lib.model.exceptions.OperandException;
 import odrl.lib.model.exceptions.UnsupportedFunctionException;
-import sparql.streamline.core.Sparql;
 
 public class OperandFactory {
 
@@ -53,7 +53,7 @@ public class OperandFactory {
 	public static OperandFunction createOperandFunction(Model model, RDFNode operand, List<String> functions) throws UnsupportedFunctionException, OperandException {
 		return createOperandFunction( model,  operand, functions, false);
 	}
-	
+
 	public static OperandFunction createOperandFunction(Model model, RDFNode operand, List<String> functions, boolean isStringFunction) throws UnsupportedFunctionException, OperandException {
 		String function = null;
 		List<IOperand> arguments = Lists.newArrayList();
@@ -62,20 +62,20 @@ public class OperandFactory {
 			checkFunctionExists(functions,  function);
 			List<String> argumentsRaw = retrieveRawArguments( model,  operand);
 			arguments = argumentsRaw.parallelStream().map(elem -> elem.split(",")).map( elem -> buildOperandAgument(model, elem[0].trim(), elem[1].trim(), isStringFunction)).collect(Collectors.toList());
-			
+
 		}else {
 			function = operand.asLiteral().toString();
 		}
-		 
-	
+
+
 		return  new OperandFunction(function, arguments, isStringFunction);
-		
+
 	}
 
-	
+
 	private static final String QUERY = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n SELECT ?item ?type WHERE { <###OPERAND###> <http://www.w3.org/ns/odrl-extension#hasArguments> ?list .  ?list rdf:rest*/rdf:first ?item .  BIND (datatype(?item) AS ?type) . }";
 	private static final String REPLACE_TOKEN = "###OPERAND###";
-	
+
 	private static List<String> retrieveRawArguments(Model model, RDFNode operand) throws OperandException{
 		List<String> argumentsRaw = Lists.newArrayList();
 		try {
@@ -88,7 +88,7 @@ public class OperandFactory {
 		}
 		return argumentsRaw;
 	}
-	
+
 	private static IOperand buildOperandAgument(Model model, String value, String type, boolean isStringFunction) {
 		OperandValue operand= new OperandValue(value);
 		if(type!=null && !type.isEmpty() && !isStringFunction) {
@@ -99,7 +99,7 @@ public class OperandFactory {
 		}
 		return operand;
 	}
-	
+
 	private static String formatConstantURI(Model model, String uri) {
 		StringBuilder result = new StringBuilder();
 		try {
@@ -109,7 +109,7 @@ public class OperandFactory {
 		}
 		return result.toString();
 	}
-	
+
 	// -- Operand Value methods
 
 
@@ -126,14 +126,14 @@ public class OperandFactory {
 	}
 
 	// -- Ancillary methods
-	
+
 	private static void checkFunctionExists(List<String> functions, String function) throws UnsupportedFunctionException {
 		if(!functions.contains(function))
 			throw new UnsupportedFunctionException("Provided function is not supported (maybe it was not registered), available ones are: "+functions);
 	}
-	
 
-	
+
+
 	private static String shortenURI(Model model, String node) throws UnsupportedFunctionException {
 		String shortenURI = null;
 		Optional<Entry<String, String>> prefix = model.getNsPrefixMap().entrySet().parallelStream().filter(entry -> node.startsWith(entry.getValue())).findFirst();
@@ -144,7 +144,7 @@ public class OperandFactory {
 				throw new UnsupportedFunctionException("Provided uri ("+node+" has no prefix associated, please provide one.");
 			}
 		return shortenURI;
-		
+
 	}
 
 

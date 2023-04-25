@@ -1,6 +1,7 @@
 package odrl.lib.model.nodes;
 
 import java.util.List;
+
 import org.apache.commons.compress.utils.Lists;
 
 public class OperandFunction implements IOperand {
@@ -8,13 +9,13 @@ public class OperandFunction implements IOperand {
 	private String function;
 	private List<IOperand> arguments;
 	private Boolean isStringFunction = false;
-	
+
 	public OperandFunction(String function)  {
 		super();
 		this.function = function;
 		this.arguments = Lists.newArrayList();
 	}
-	
+
 	public OperandFunction(String function, List<IOperand> arguments, boolean isStringFunction) {
 		super();
 		this.function = function;
@@ -22,8 +23,8 @@ public class OperandFunction implements IOperand {
 		this.isStringFunction = isStringFunction;
 	}
 
-	
-	
+
+
 	public List<IOperand> getArguments() {
 		return arguments;
 	}
@@ -43,6 +44,7 @@ public class OperandFunction implements IOperand {
 	private static final char TOKEN_PAR_1 = '(';
 	private static final char TOKEN_PAR_2 = ')';
 	private static final char TOKEN_COMMA = ',';
+
 	@Override
 	public String toSPARQL() {
 		StringBuilder sparqlRepresentation = new StringBuilder();
@@ -58,6 +60,6 @@ public class OperandFunction implements IOperand {
 		}
 		return sparqlRepresentation.toString();
 	}
-	
+
 
 }

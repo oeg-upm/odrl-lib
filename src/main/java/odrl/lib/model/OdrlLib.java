@@ -41,13 +41,13 @@ public class OdrlLib {
 	// private static final Logger LOG = LoggerFactory.getLogger(OdrlLib.class);
 	private static final String PERMISSIONS = "PREFIX odrl: <http://www.w3.org/ns/odrl/2/>\n"
 			+ "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" + "SELECT ?action ?target ?left ?right ?op WHERE { \n"
-			+ " ?policy odrl:permission ?permission . \n" 
+			+ " ?policy odrl:permission ?permission . \n"
 			+ " ?permission odrl:action ?action .  \n"
-			+ " ?permission odrl:target ?target .\n" 
+			+ " ?permission odrl:target ?target .\n"
 			+ " ?permission odrl:constraint ?constraint .\n"
-			+ " ?constraint odrl:leftOperand ?left .\n" 
+			+ " ?constraint odrl:leftOperand ?left .\n"
 			+ " ?constraint odrl:rightOperand ?right .\n"
-			+ " ?constraint odrl:operator ?op .\n" 
+			+ " ?constraint odrl:operator ?op .\n"
 			+ "} \n";
 
 	protected static boolean debug = false;
@@ -128,7 +128,7 @@ public class OdrlLib {
 	private Model toRDFModel(JsonObject policy) {
 		Model model = ModelFactory.createDefaultModel();
 		model.setNsPrefixes(prefixes);
-		model.read(new ByteArrayInputStream(policy.toString().getBytes()), null, RDFFormat.JSONLD11.toString());
+		model.read(new ByteArrayInputStream(policy.toString().getBytes()), null, "JSONLD11");
 		return model;
 	}
 
@@ -146,13 +146,13 @@ public class OdrlLib {
 		OperandFunction operator = OperandFactory.createOperandFunction(model, opNode, functions);
 		operator.getArguments().add(left);
 		operator.getArguments().add(right);
-		Constraint constraint = new Constraint(operator);	
+		Constraint constraint = new Constraint(operator);
 		action.addConstraint(constraint);
 		permission.addAction(action);
 		return permission;
 	}
-	
-	
+
+
 
 	public static boolean isDebug() {
 		return debug;
@@ -161,7 +161,7 @@ public class OdrlLib {
 	public static void setDebug(boolean debug) {
 		OdrlLib.debug = debug;
 	}
-	
+
 	public void registerNative() {
 		registerPrefix("odrl", "http://www.w3.org/ns/odrl/2/");
 		try {

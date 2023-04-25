@@ -1,11 +1,10 @@
 package odrl.lib.model.functions;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.apache.jena.sparql.expr.NodeValue;
 import org.apache.jena.sparql.function.FunctionBase0;
-
+import java.util.Date;
 public class Time extends FunctionBase0 implements IFunction {
 
 	private SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
@@ -31,6 +30,7 @@ public class Time extends FunctionBase0 implements IFunction {
 		buff.append(format.format(date));
 		return buff.toString();
 	}
+
 
 	@Override
 	public String getName() {

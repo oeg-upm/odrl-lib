@@ -1,13 +1,10 @@
 package odrl.lib.model;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
-import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -19,7 +16,6 @@ import com.google.gson.JsonObject;
 
 import odrl.lib.model.exceptions.EvaluationException;
 import odrl.lib.model.exceptions.OperatorException;
-import odrl.lib.model.exceptions.UnsupportedFunctionException;
 import odrl.lib.model.nodes.IOperand;
 import odrl.lib.model.nodes.OperandFunction;
 
@@ -28,7 +24,7 @@ public class Constraint {
 	private static final Logger LOG = LoggerFactory.getLogger(Constraint.class);
 
 	private OperandFunction operatorNode;
-	
+
 	public Constraint(OperandFunction operatorNode) throws OperatorException {
 		super();
 		validOperator(operatorNode);
@@ -44,7 +40,7 @@ public class Constraint {
 	public IOperand getLeftNode() {
 		return operatorNode.getArguments().get(0);
 	}
-	
+
 	public void setLeftNode(IOperand leftNode) {
 		operatorNode.getArguments().set(0, leftNode);
 	}
@@ -78,22 +74,22 @@ public class Constraint {
 	private boolean evaluateQuery(String query) throws EvaluationException {
 		if(OdrlLib.debug)
 			LOG.info("Constraint SPARQL: "+query);
-		
+
 		boolean allowed = false;
 		QueryExecution qexec = null;
 		ResultSet rs = null;
 		try {
 			Model model = ModelFactory.createDefaultModel();
 			qexec = QueryExecutionFactory.create(QueryFactory.create(query), model);
-			rs = qexec.execSelect();	
-			if(rs.hasNext()) { 
+			rs = qexec.execSelect();
+			if(rs.hasNext()) {
 				RDFNode qs = rs.next().get("bind1");
 				if(qs!=null) {
 					allowed = qs.asLiteral().getBoolean();
 				}else {
 					throw new EvaluationException("Policy could not be evaluated due to the fact that either two non-compatible operands in terms of datatypes were provided or the operands lack of datatypes needed by the operand to evaluate them");
 				}
-				
+
 			}
 			rs.close();
 			qexec.close();
@@ -104,7 +100,7 @@ public class Constraint {
 			if(qexec!=null) qexec.close();
 			if(rs!=null) rs.close();
 		}
-		
+
 		if(OdrlLib.debug)
 			LOG.info("Constraint SPARQL resolved as: "+allowed);
 		return allowed;
