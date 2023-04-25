@@ -8,9 +8,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import odrl.lib.exceptions.PolicyException;
-import odrl.lib.exceptions.UnsupportedOperandException;
-import odrl.lib.exceptions.UnsupportedOperatorException;
+import odrl.lib.model.exceptions.UnsupportedFunctionException;
 import tests.odrl.lib.Tests;
 
 public class TestDateTime {
@@ -44,7 +42,7 @@ public class TestDateTime {
 	 * This test returns always an empty map of targets and actions
 	 * @throws PolicyException
 	 * @throws UnsupportedOperatorException
-	 * @throws UnsupportedOperandException
+	 * @throws UnsupportedFunctionException
 	 */
 	@Test
 	public void test01() throws Exception {
@@ -57,7 +55,7 @@ public class TestDateTime {
 	 * This test checks that current system's date time is within the temporal space 06:00AM and 23:59PM.
 	 * @throws PolicyException
 	 * @throws UnsupportedOperatorException
-	 * @throws UnsupportedOperandException
+	 * @throws UnsupportedFunctionException
 	 */
 	@Test
 	public void test02() throws Exception {
@@ -74,7 +72,7 @@ public class TestDateTime {
 	 * This test always throws a {@link PolicyException}
 	 * @throws PolicyException
 	 * @throws UnsupportedOperatorException
-	 * @throws UnsupportedOperandException
+	 * @throws UnsupportedFunctionException
 	 */
 	@Test
 	public void test03() throws Exception {
@@ -93,7 +91,7 @@ public class TestDateTime {
 	 * This test always throws a {@link PolicyException}.
 	 * @throws PolicyException
 	 * @throws UnsupportedOperatorException
-	 * @throws UnsupportedOperandException
+	 * @throws UnsupportedFunctionException
 	 */
 	@Test
 	public void test04() throws Exception {
@@ -112,7 +110,7 @@ public class TestDateTime {
 	 * This test always throws a {@link PolicyException}.
 	 * @throws PolicyException
 	 * @throws UnsupportedOperatorException
-	 * @throws UnsupportedOperandException
+	 * @throws UnsupportedFunctionException
 	 */
 	@Test
 	public void test05() throws Exception {
@@ -124,5 +122,5 @@ public class TestDateTime {
 		Assert.assertTrue(allowedTo.get(TARGET).get(0).equals(ACTION));
 	}
 
-	
+
 }

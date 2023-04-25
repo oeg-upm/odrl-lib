@@ -3,18 +3,9 @@ package tests.odrl.lib.leftoperands;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.google.gson.JsonObject;
-
-import odrl.lib.OdrlLib;
-import odrl.lib.Policies;
-import odrl.lib.exceptions.OdrlRegistrationException;
-import odrl.lib.exceptions.PolicyException;
-import odrl.lib.exceptions.UnsupportedOperandException;
-import odrl.lib.exceptions.UnsupportedOperatorException;
-import odrl.lib.operands.DateTime;
-import odrl.lib.operands.Spatial;
-import odrl.lib.operands.Time;
-import tests.odrl.lib.Tests;
+import odrl.lib.model.OdrlLib;
+import odrl.lib.model.exceptions.OdrlRegistrationException;
+import odrl.lib.model.functions.Time;
 
 public class TestOdrlLib {
 
@@ -64,7 +55,7 @@ public class TestOdrlLib {
 		odrl.registerPrefix("op", "http://test.es/operands#");
 		Assert.assertTrue(odrl.getPrefixes().containsKey("op"));
 	}
-	
+
 	/**
 	 * This test checks that operands or operators are correctly added
 	 * be registered
@@ -76,14 +67,15 @@ public class TestOdrlLib {
 			OdrlLib odrl = new OdrlLib();
 			odrl.registerPrefix("op", "http://test.es/operands#");
 			odrl.register("op", new Time());
-			correctlyAdded = odrl.getFunctions().containsKey("http://test.es/operands#time");
+			correctlyAdded = odrl.getFunctions().contains("op:time");
 		} catch (OdrlRegistrationException e) {
+
 			correctlyAdded = false;
 		}
 		Assert.assertTrue(correctlyAdded);
 	}
-	
-	
+
+
 
 
 }

@@ -10,29 +10,30 @@ import java.util.stream.Stream;
 
 import com.google.gson.JsonObject;
 
-import odrl.lib.OdrlLib;
-import odrl.lib.Policies;
-import odrl.lib.exceptions.OdrlRegistrationException;
-import odrl.lib.exceptions.PolicyException;
-import odrl.lib.exceptions.UnsupportedOperandException;
-import odrl.lib.exceptions.UnsupportedOperatorException;
-import odrl.lib.operands.Time;
-import odrl.lib.operators.GeoSparqlContains;
+import odrl.lib.model.OdrlLib;
+import odrl.lib.model.Policies;
+import odrl.lib.model.exceptions.EvaluationException;
+import odrl.lib.model.exceptions.OdrlRegistrationException;
+import odrl.lib.model.exceptions.OperandException;
+import odrl.lib.model.exceptions.OperatorException;
+import odrl.lib.model.exceptions.UnsupportedFunctionException;
+import odrl.lib.model.functions.Time;
 
 public class Tests {
 
+	private Tests() {
+		super();
+	}
 
-	
+
 	public static OdrlLib odrl = new OdrlLib();
-	
-	
-	
-	public static Map<String, List<String>> solvePolicy(String policy) throws UnsupportedOperandException, UnsupportedOperatorException, PolicyException, OdrlRegistrationException {
+
+	public static Map<String, List<String>> solvePolicy(String policy) throws UnsupportedFunctionException, OdrlRegistrationException, OperandException, OperatorException, EvaluationException {
 		JsonObject policyJson = Policies.fromJsonld11String(policy);
-		
+
 		odrl.registerPrefix("ops", "http://upm.es/operands#");
 		odrl.register("ops", new Time());
-		
+
 		return odrl.solve(policyJson);
 	}
 

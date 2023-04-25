@@ -1,0 +1,42 @@
+{
+  "@context": ["http://www.w3.org/ns/odrl.jsonld",
+   {"spatialF" : "http://jena.apache.org/function/spatial#",
+    "units" : "http://www.opengis.net/def/uom/OGC/1.0/",
+    "odrlE" : "http://www.w3.org/ns/odrl-extension#",
+    "arguments" : {
+      "@id" : "odrlE:hasArguments",
+      "@container": "@list"
+    },
+    "value" : {
+      "@id" : "odrlE:value",
+      "@type" : "@id"
+    },
+    "leftOperandFunction" : "odrlE:LeftOperandFunction",
+    "leftOperandValue" : "odrlE:LeftOperandFunction",
+    "rightOperandFunction" : "odrlE:RightOperandFunction",
+    "rightOperandValue" : "odrlE:RightOperandFunction",
+    "operandVariable" : "odrlE:OperandVariable"
+   }
+ ],
+
+  "@type": "Set",
+  "uid": "http://example.com/policy:1010",
+  "permission": [
+    {
+      "target": "http://example.com/asset:9898.movie",
+      "action": "display",
+      "constraint": [{
+          "leftOperand": {
+            "@id" : "odrl:dateTime",
+            "arguments" : [{"@id" : "units:meter"}]
+          },
+          "operator": "eq",
+          "rightOperand": {
+            "@value": "2022-11-04T06:00:13.625668Z",
+            "@type": "xsd:dateTime"
+          }
+        }
+      ]
+    }
+  ]
+}

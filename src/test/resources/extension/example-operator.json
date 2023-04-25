@@ -1,0 +1,55 @@
+{
+ "@context": ["http://www.w3.org/ns/odrl.jsonld",
+   {"spatialF" : "http://jena.apache.org/function/spatial#",
+    "units" : "http://www.opengis.net/def/uom/OGC/1.0/",
+    "odrlE" : "http://www.w3.org/ns/odrl-extension#",
+    "arguments" : {
+      "@id" : "odrlE:hasArugments",
+      "@container": "@list"
+    },
+    "name" : {
+      "@id" : "odrlE:operandName",
+      "@type" : "@id"
+    },
+    "const" : {
+      "@id" : "odrlE:const",
+      "@type" : "@id"
+    },
+    "value" : {
+      "@id" : "odrlE:value",
+      "@type" : "@id"
+    },
+    "leftOperandFunction" : "odrlE:LeftOperandFunction",
+    "leftOperandValue" : "odrlE:LeftOperandFunction",
+    "rightOperandFunction" : "odrlE:RightOperandFunction",
+    "rightOperandValue" : "odrlE:RightOperandFunction"
+   }
+ ],
+ "@type": "Set",
+ "uid": "http://example.com/policy:1010",
+ "permission": [{
+ 	"target": "http://example.com/asset:9898.movie",
+	"action": "read",
+	"constraint":{
+          "leftOperand": {
+      		"@id" : "urn:arg1",
+            "@type" : "leftOperandValue",
+            "value" :   { 
+              "@value" : "'POLYGON((-3.840070031583308 40.405675773960866,-3.839853107929229 40.40574011056009,-3.839842379093169 40.40571994155346,-3.839847072958945 40.40571840972993,-3.839840702712535 40.405706155140365,-3.840056620538234 40.40564947763477,-3.840070031583308 40.405675773960866))'", 
+               "@type" : "http://www.opengis.net/ont/geosparql#wktLiteral"
+    		}},
+          "operator": {
+            "name" : "spatialF:nearby",
+            "arguments" : [
+              {"value" : "urn:arg1"},{"value" : "urn:arg2"},{"@value" : "33", "@type" : "xsd:integer"},
+               {"value" : "units:meter"}
+            ]
+          },
+          "rightOperand": { 
+            "@id" : "urn:arg2",
+            "value" : {"@value" : "'POINT((-3.839907742614103 40.40570902334372))'",  "@type" : "http://www.opengis.net/ont/geosparql#wktLiteral" },
+            "@type" : "rightOperandValue"
+          }
+    }
+ }]
+}
